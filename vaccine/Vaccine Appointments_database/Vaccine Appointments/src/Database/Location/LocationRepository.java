@@ -1,7 +1,9 @@
 package Database.Location;
 
+import Database.Vaccines.VaccineInfo;
 import Database.Connector;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class LocationRepository {
@@ -14,7 +16,7 @@ public class LocationRepository {
         if (locationStatement == null) {
             try {
                 locationStatement = connection.prepareStatement(
-                        "SELECT * FROM Lokation WHERE VaccinationsSted = ?",
+                        "SELECT * FROM Lokation WHERE Lokation_Name = ?",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -24,9 +26,24 @@ public class LocationRepository {
         return locationStatement;
     }
 
+    public Location getOrCreate(Location location) throws SQLException {
+        PreparedStatement ps = getLocation();
+        ps.setString(1, location.getName());
+        ResultSet rs = ps.executeQuery();
+        if (!rs.next()) {
+            create(location);
+            return location;
+        }
+        int id = rs.getInt("Lokation_ID");
+        String name = rs.getString("Lokation_Name");
+        Location exitsingLocation = new Location(name);
+        exitsingLocation.setId(id);
+        return exitsingLocation;
+    }
+
     public void createIfNotExists(Location location) throws SQLException {
         PreparedStatement ps = getLocation();
-        ps.setString(1, location.getVaccinationsSted());
+        ps.setString(1, location.getName());
         ResultSet rs = ps.executeQuery();
         if (!rs.next()) {
             create(location);
@@ -37,7 +54,7 @@ public class LocationRepository {
     private PreparedStatement getInsertLocationStatement() throws SQLException {
         if (insertLocation == null) {
             insertLocation = connection.prepareStatement(
-                    "INSERT INTO Lokation(VaccinationsSted, VaccineType, VagtID, Antal) VALUES (?, ?, ?, ?)",
+                    "INSERT INTO Lokation(Lokation_Name) VALUES (?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertLocation;
@@ -45,11 +62,14 @@ public class LocationRepository {
 
     private void create(Location location) throws SQLException {
         PreparedStatement ps = getInsertLocationStatement();
-        ps.setString(1, location.getVaccinationsSted());
-        ps.setString(2, location.getVaccineType());
-        ps.setInt(3, location.getVagtID());
-        ps.setInt(4, location.getAntal());
+        ps.setString(1, location.getName());
         ps.executeUpdate();
+
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        generatedKeys.next();
+        int locationId = generatedKeys.getInt(1);
+        location.setId(locationId);
+        generatedKeys.close();
     }
 
 }

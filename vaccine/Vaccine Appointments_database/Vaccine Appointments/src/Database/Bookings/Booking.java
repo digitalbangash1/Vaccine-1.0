@@ -12,20 +12,22 @@ public class Booking {
     private String vaccinationsSted;
     private Date vacinationsTid;
     private String vaccineType;
+    private int locationId;
 
     public Booking(
             String cprnr,
             int medarbejderID,
             String vaccinationsSted,
             Date vacinationsTid,
-            String vaccineType
+            String vaccineType,
+            int locationId
     ){
-        this.id = id;
         this.cprnr = cprnr;
         this.medarbejderID = medarbejderID;
         this.vaccinationsSted = vaccinationsSted;
         this.vacinationsTid = vacinationsTid;
         this.vaccineType = vaccineType;
+        this.locationId = locationId;
     }
 
     public int getId() {
@@ -34,6 +36,10 @@ public class Booking {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getLocationId() {
+        return locationId;
     }
 
     public String getCprnr() {

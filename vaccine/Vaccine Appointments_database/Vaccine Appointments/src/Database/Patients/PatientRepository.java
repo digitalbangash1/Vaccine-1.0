@@ -38,7 +38,7 @@ public class PatientRepository {
     private PreparedStatement getInsertPatientStatement() throws SQLException {
         if (insertPatient == null) {
             insertPatient = connection.prepareStatement(
-                    "INSERT INTO Patient(cprnr, name) VALUES (?, ?)",
+                    "INSERT INTO Patient(cprnr, Navn) VALUES (?, ?)",
                     Statement.NO_GENERATED_KEYS);
         }
         return insertPatient;

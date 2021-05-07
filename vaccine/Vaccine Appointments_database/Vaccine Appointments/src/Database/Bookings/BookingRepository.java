@@ -39,7 +39,7 @@ public class BookingRepository {
     private PreparedStatement getInsertBookingStatement() throws SQLException {
         if (insertBooking == null) {
             insertBooking = connection.prepareStatement(
-                    "INSERT INTO Booking(CPRNR, MedarbejderID, VaccinationsSted, vacinationsTid, vaccineType) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO Booking(CPRNR, MedarbejderID, vacinationsTid, vaccineType, Lokation_ID) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertBooking;
@@ -49,9 +49,9 @@ public class BookingRepository {
         PreparedStatement ps = getInsertBookingStatement();
         ps.setString(1, booking.getCprnr());
         ps.setInt(2, booking.getMedarbejderID());
-        ps.setString(3, booking.getVaccinationsSted());
-        ps.setString(4, DateFormatter.format(booking.getVacinationsTid()));
-        ps.setString(5, booking.getVaccineType());
+        ps.setString(3, DateFormatter.format(booking.getVacinationsTid()));
+        ps.setString(4, booking.getVaccineType());
+        ps.setInt(5, booking.getLocationId());
         ps.executeUpdate();
 
         ResultSet generatedKeys = ps.getGeneratedKeys();

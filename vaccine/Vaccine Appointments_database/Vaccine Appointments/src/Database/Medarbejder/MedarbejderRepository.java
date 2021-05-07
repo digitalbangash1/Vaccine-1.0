@@ -58,14 +58,11 @@ public class MedarbejderRepository {
             return medarbejder;
         }
         int medarbejderId = rs.getInt("MedarbejderID");
-        int vagtId = rs.getInt("VagtID");
         int certId = rs.getInt("CertId");
         String navn = rs.getString("Navn");
-        String titel = rs.getString("Titel");
-        BigDecimal lon = rs.getBigDecimal("Løn");
-        String muligLok = rs.getString("muligeLok");
+        String titel = rs.getString("Title");
 
-        Medarbejder existingMedarbejder = new Medarbejder(vagtId,certId,navn,titel,lon,muligLok);
+        Medarbejder existingMedarbejder = new Medarbejder(certId,navn,titel);
         existingMedarbejder.setMedarbejderID(medarbejderId);
         return existingMedarbejder;
     }
@@ -75,7 +72,7 @@ public class MedarbejderRepository {
     private PreparedStatement getInsertMedarbejderStatement() throws SQLException {
         if (insertMedarbejder == null) {
             insertMedarbejder = connection.prepareStatement(
-                    "INSERT INTO Medarbejder(VagtID, CertID, Navn, Titel, Løn, muligeLok) VALUES (?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO Medarbejder(CertID, Navn, Title) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertMedarbejder;
@@ -83,12 +80,9 @@ public class MedarbejderRepository {
 
     private void create(Medarbejder medarbejder) throws SQLException {
         PreparedStatement ps = getInsertMedarbejderStatement();
-        ps.setInt(1, medarbejder.getVagtID());
-        ps.setInt(2, medarbejder.getCertificationID());
-        ps.setString(3, medarbejder.getNavn());
-        ps.setString(4, medarbejder.getTitel());
-        ps.setBigDecimal(5, medarbejder.getLøn());
-        ps.setString(6, medarbejder.getMuligLok());
+        ps.setInt(1, medarbejder.getCertificationID());
+        ps.setString(2, medarbejder.getNavn());
+        ps.setString(3, medarbejder.getTitel());
         ps.executeUpdate();
 
         ResultSet generatedKeys = ps.getGeneratedKeys();

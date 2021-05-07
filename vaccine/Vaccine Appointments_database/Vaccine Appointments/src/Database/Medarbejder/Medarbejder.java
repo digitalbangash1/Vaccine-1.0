@@ -5,27 +5,18 @@ import java.math.BigDecimal;
 public class Medarbejder {
 
     private int medarbejderID;
-    private int vagtID;
     private int certificationID;
     private String navn;
     private String titel;
-    private BigDecimal lon;
-    private String muligLok;
 
     public Medarbejder(
-            int vagtID,
             int certificationID,
             String navn,
-            String titel,
-            BigDecimal lon,
-            String muligLok
+            String titel
     ){
-        this.vagtID = vagtID;
         this.certificationID = certificationID;
         this.navn = navn;
         this.titel = titel;
-        this.lon = lon;
-        this.muligLok = muligLok;
     }
 
     public int getMedarbejderID() {
@@ -34,10 +25,6 @@ public class Medarbejder {
 
     public void setMedarbejderID(int medarbejderID) {
         this.medarbejderID = medarbejderID;
-    }
-
-    public int getVagtID() {
-        return vagtID;
     }
 
     public int getCertificationID() {
@@ -52,11 +39,4 @@ public class Medarbejder {
         return titel;
     }
 
-    public BigDecimal getLøn() {
-        return lon;
-    }
-
-    public String getMuligLok() {
-        return muligLok;
-    }
 }

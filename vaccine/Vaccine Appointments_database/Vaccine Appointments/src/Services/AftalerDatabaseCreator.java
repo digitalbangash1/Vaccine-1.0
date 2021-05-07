@@ -16,7 +16,6 @@ import Database.Vagt.Vagt;
 import Database.Vagt.VagtRepository;
 import Models.VaccinationsAftale;
 
-import java.awt.print.Book;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -42,7 +41,7 @@ public class AftalerDatabaseCreator {
             Vagt testVagt = vagtRepository.getOrCreate(new Vagt(new Date()));
             Certification testCert = certificationRepository.getOrCreate(new Certification(testVaccine.getType()));
 
-            Medarbejder medarbejder = new Medarbejder(testVagt.getVagtID(), testCert.getCertId(), "Jens", "Medarbejder", new BigDecimal(30000), "Lok");
+            Medarbejder medarbejder = new Medarbejder(testCert.getCertId(), "Jens", "Medarbejder");
             Medarbejder testMedarbejder = medarbejderRepository.getOrCreate(medarbejder);
 
             AftalerFileReader reader = new AftalerFileReader();
@@ -56,10 +55,9 @@ public class AftalerDatabaseCreator {
                 VaccineInfo vaccineInfo = new VaccineInfo(aftale.getVaccineType(), new BigDecimal(0));
                 vaccineRepository.createIfNotExists(vaccineInfo);
 
-                Location location = new Location(aftale.getLokation(), aftale.getVaccineType(), testVagt.getVagtID(), 0);
-                locationRepository.createIfNotExists(location);
+                Location location = locationRepository.getOrCreate(new Location(aftale.getLokation()));
 
-                Booking booking = new Booking(aftale.getCprnr(), testMedarbejder.getMedarbejderID(), aftale.getLokation(), aftale.getAftaltTidspunkt() , aftale.getVaccineType());
+                Booking booking = new Booking(aftale.getCprnr(),testMedarbejder.getMedarbejderID(),aftale.getLokation(),aftale.getAftaltTidspunkt(),aftale.getVaccineType(),location.getId());
                 bookingRepository.createIfNotExists(booking);
             }
 
@@ -72,3 +70,4 @@ public class AftalerDatabaseCreator {
     }
 
 }
+//aftale.getCprnr(), testMedarbejder.getMedarbejderID(), aftale.getLokation(), aftale.getAftaltTidspunkt() , aftale.getVaccineType(),location.getId()
