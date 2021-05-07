@@ -14,7 +14,7 @@ public class PatientRepository {
         if (patientStatement == null) {
             try {
                 patientStatement = connection.prepareStatement(
-                        "SELECT * FROM Patient WHERE cprnr = ?",
+                        "SELECT * FROM Patient WHERE cpr_nr = ?",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class PatientRepository {
     private PreparedStatement getInsertPatientStatement() throws SQLException {
         if (insertPatient == null) {
             insertPatient = connection.prepareStatement(
-                    "INSERT INTO Patient(cprnr, Navn) VALUES (?, ?)",
+                    "INSERT INTO Patient(cpr_nr, Navn) VALUES (?, ?)",
                     Statement.NO_GENERATED_KEYS);
         }
         return insertPatient;

@@ -58,8 +58,8 @@ public class MedarbejderRepository {
             return medarbejder;
         }
         int medarbejderId = rs.getInt("MedarbejderID");
-        int certId = rs.getInt("CertId");
         String navn = rs.getString("Navn");
+        int certId = rs.getInt("Cert_ID");
         String titel = rs.getString("Title");
 
         Medarbejder existingMedarbejder = new Medarbejder(certId,navn,titel);
@@ -72,7 +72,7 @@ public class MedarbejderRepository {
     private PreparedStatement getInsertMedarbejderStatement() throws SQLException {
         if (insertMedarbejder == null) {
             insertMedarbejder = connection.prepareStatement(
-                    "INSERT INTO Medarbejder(CertID, Navn, Title) VALUES (?, ?, ?)",
+                    "INSERT INTO Medarbejder(Navn, Cert_ID, Title) VALUES (?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertMedarbejder;

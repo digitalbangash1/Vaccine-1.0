@@ -1,6 +1,6 @@
 package Database.Vaccines;
 import Database.Connector;
-import Database.Vagt.Vagt;
+//import Database.Vagt.Vagt;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -14,7 +14,7 @@ public class VaccineRepository {
         if (patientStatement == null) {
             try {
                 patientStatement = connection.prepareStatement(
-                        "SELECT * FROM VaccineInfo WHERE VaccineType = ?",
+                        "SELECT * FROM Vacciner WHERE Vaccine_Type = ?",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class VaccineRepository {
         if (existingVaccineStatement == null) {
             try {
                 existingVaccineStatement = connection.prepareStatement(
-                        "SELECT * FROM VaccineInfo LIMIT 1",
+                        "SELECT * FROM Vacciner LIMIT 1",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class VaccineRepository {
             create(vaccineInfo);
             return vaccineInfo;
         }
-        String vaccineType = rs.getString("VaccineType");
+        String vaccineType = rs.getString("Vaccine_Type");
         BigDecimal pris = rs.getBigDecimal("Pris");
         VaccineInfo existingVaccine = new VaccineInfo(vaccineType, pris);
         return existingVaccine;
@@ -65,7 +65,7 @@ public class VaccineRepository {
     private PreparedStatement getInsertVaccineStatement() throws SQLException {
         if (insertVaccine == null) {
             insertVaccine = connection.prepareStatement(
-                    "INSERT INTO VaccineInfo(VaccineType, Pris) VALUES (?, ?)",
+                    "INSERT INTO Vacciner(Vaccine_Type, Pris) VALUES (?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertVaccine;

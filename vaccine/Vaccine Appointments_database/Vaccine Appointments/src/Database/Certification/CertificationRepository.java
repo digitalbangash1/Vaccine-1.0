@@ -13,7 +13,7 @@ public class CertificationRepository {
         if (certStatement == null) {
             try {
                 certStatement = connection.prepareStatement(
-                        "SELECT * FROM Certifikation WHERE certID = ?",
+                        "SELECT * FROM Certifikation WHERE Cert_ID = ?",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -54,8 +54,8 @@ public class CertificationRepository {
             create(certification);
             return certification;
         }
-        int certId = rs.getInt("CertID");
-        String vaccineTYpe = rs.getString("VaccineType");
+        int certId = rs.getInt("Cert_ID");
+        String vaccineTYpe = rs.getString("Vaccine_Type");
         Certification existingCert = new Certification(vaccineTYpe);
         existingCert.setCertId(certId);
         return existingCert;
@@ -65,7 +65,7 @@ public class CertificationRepository {
     private PreparedStatement getInsertCertificationStatement() throws SQLException {
         if (insertCert == null) {
             insertCert = connection.prepareStatement(
-                    "INSERT INTO Certifikation(VaccineType) VALUES (?)",
+                    "INSERT INTO Certifikation(Vaccine_Type) VALUES (?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertCert;
@@ -78,8 +78,8 @@ public class CertificationRepository {
 
         ResultSet generatedKeys = ps.getGeneratedKeys();
         generatedKeys.next();
-        int certId = generatedKeys.getInt(1);
-        cert.setCertId(certId);
+        int Cert_ID = generatedKeys.getInt(1);
+        cert.setCertId(Cert_ID);
         generatedKeys.close();
     }
 

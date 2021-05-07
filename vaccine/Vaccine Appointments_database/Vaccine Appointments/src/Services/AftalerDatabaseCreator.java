@@ -12,8 +12,8 @@ import Database.Patients.Patient;
 import Database.Patients.PatientRepository;
 import Database.Vaccines.VaccineInfo;
 import Database.Vaccines.VaccineRepository;
-import Database.Vagt.Vagt;
-import Database.Vagt.VagtRepository;
+//import Database.Vagt.Vagt;
+//import Database.Vagt.VagtRepository;
 import Models.VaccinationsAftale;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class AftalerDatabaseCreator {
 
     public void create(File file) {
 
-        VagtRepository vagtRepository = new VagtRepository();
+       // VagtRepository vagtRepository = new VagtRepository();
         BookingRepository bookingRepository = new BookingRepository();
         PatientRepository patientRepository = new PatientRepository();
         VaccineRepository vaccineRepository = new VaccineRepository();
@@ -38,7 +38,7 @@ public class AftalerDatabaseCreator {
         try {
 
             VaccineInfo testVaccine = vaccineRepository.getOrCreate(new VaccineInfo("abc", new BigDecimal(0)));
-            Vagt testVagt = vagtRepository.getOrCreate(new Vagt(new Date()));
+           // Vagt testVagt = vagtRepository.getOrCreate(new Vagt(new Date()));
             Certification testCert = certificationRepository.getOrCreate(new Certification(testVaccine.getType()));
 
             Medarbejder medarbejder = new Medarbejder(testCert.getCertId(), "Jens", "Medarbejder");

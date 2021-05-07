@@ -15,7 +15,7 @@ public class BookingRepository {
         if (bookingStatement == null) {
             try {
                 bookingStatement = connection.prepareStatement(
-                        "SELECT * FROM Booking WHERE BookingID = ?",
+                        "SELECT * FROM Booking WHERE Booking_ID = ?",
                         ResultSet.TYPE_FORWARD_ONLY,
                         ResultSet.CONCUR_UPDATABLE);
             } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class BookingRepository {
     private PreparedStatement getInsertBookingStatement() throws SQLException {
         if (insertBooking == null) {
             insertBooking = connection.prepareStatement(
-                    "INSERT INTO Booking(CPRNR, MedarbejderID, vacinationsTid, vaccineType, Lokation_ID) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO Booking(cpr_nr, Medarbejder_ID, Vaccinations_Tid, VacType, Lokation_ID) VALUES (?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
         }
         return insertBooking;
