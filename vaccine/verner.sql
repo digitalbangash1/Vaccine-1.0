@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS VaccineInfo;
 #Init tables.
 CREATE TABLE Patient
 	(cprnr			varchar(15),
-	 Name			VARCHAR(45),
+	 Navn			VARCHAR(45),
 	 PRIMARY KEY(CPRNR)
 	);
     

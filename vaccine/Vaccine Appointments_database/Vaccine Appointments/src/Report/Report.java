@@ -21,6 +21,8 @@ public class Report {
             // String query="SELECT CPRNR, MedarbejderID,VaccinationsSted,VaccineType,vacinationsTid from booking";
             //String query = "SELECT * from Booking";
             String query ="select * from Booking a INNER JOIN Patient b on a.CPRNR = b.cprnr ";
+            //String sql ="select , r.Pris * r.Antal as TotalPris from ( select a.VaccineType, b.Pris, count() as Antal from Booking a inner join VaccineInfo b on a.VaccineType = b.VaccineType group by a.VaccineType ) r";
+
             PreparedStatement ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
 
